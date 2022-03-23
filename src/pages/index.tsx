@@ -1,6 +1,7 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import {
   ChangeEventHandler,
+  Fragment,
   useCallback,
   useEffect,
   useMemo,
@@ -20,21 +21,24 @@ import {
 import PokemonItem from '../components/Home/PokemonItem';
 import LoadMoreButton from '../components/Home/LoadMoreButton';
 import { DefaultInput } from '../components/shared/DefaultInput/styles';
+import Head from 'next/head';
 
 interface ModifyPokemonType {
   name: string;
   modifyName: string;
   id: number;
   url: string;
+  image: string;
 }
 
 interface Props {
   pokemons: ModifyPokemonType[];
+  error?: string;
 }
 
 const pageSize = 10;
 
-const Home: NextPage<Props> = ({ pokemons }) => {
+const Home: NextPage<Props> = ({ pokemons, error }) => {
   const [currentPage, setPage] = useState(1);
 
   const [searchName, setSearchName] = useState('');
@@ -77,47 +81,74 @@ const Home: NextPage<Props> = ({ pokemons }) => {
     [onChange]
   );
 
+  if (error) {
+    return (
+      <div>
+        <Head>
+          <title>{error}</title>
+        </Head>
+        <span>{error}</span>
+      </div>
+    );
+  }
+
   return (
-    <HomeContainer>
-      <HomeContent>
-        <DefaultInput
-          placeholder="Digite um nome a pesquisar"
-          onChange={onChangeDebounce}
-          type="text"
-        />
-        <PokemonListContainer>
-          {pokemonSeeingList.map((pokemon) => (
-            <PokemonItem {...pokemon} key={pokemon.id} />
-          ))}
-        </PokemonListContainer>
-        <LoadMoreButton
-          showButton={
-            pokemonsFiltered.length >
-            pokemonSeeingList.length
-          }
-          onClick={onClickLoadMore}
-        />
-      </HomeContent>
-    </HomeContainer>
+    <Fragment>
+      <Head>
+        <title>Search Pokemon</title>
+      </Head>
+      <HomeContainer>
+        <HomeContent>
+          <DefaultInput
+            placeholder="Type a name to search"
+            onChange={onChangeDebounce}
+            type="text"
+          />
+          <PokemonListContainer>
+            {pokemonSeeingList.map((pokemon) => (
+              <PokemonItem {...pokemon} key={pokemon.id} />
+            ))}
+          </PokemonListContainer>
+          <LoadMoreButton
+            showButton={
+              pokemonsFiltered.length >
+              pokemonSeeingList.length
+            }
+            onClick={onClickLoadMore}
+          />
+        </HomeContent>
+      </HomeContainer>
+    </Fragment>
   );
 };
 
 export const getServerSideProps: GetServerSideProps =
   async () => {
-    const { results = [] } = await getPokemonsService();
+    try {
+      const { results = [] } = await getPokemonsService();
 
-    return {
-      props: {
-        pokemons: results.map<ModifyPokemonType>(
-          ({ name, url }, index) => ({
-            name,
-            modifyName: name.split('-').join(' '),
-            id: index + 1,
-            url
-          })
-        )
-      }
-    };
+      return {
+        props: {
+          pokemons: results.map<ModifyPokemonType>(
+            ({ name, url }, index) => ({
+              name,
+              modifyName: name.split('-').join(' '),
+              id: index + 1,
+              url,
+              image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+                index + 1
+              }.png`
+            })
+          )
+        }
+      };
+    } catch ({ message }) {
+      return {
+        props: {
+          error: message || 'An unexpected error ocurred'
+        }
+      };
+    }
   };
 
 export default Home;
