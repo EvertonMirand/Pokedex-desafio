@@ -1,14 +1,16 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import {
   ChangeEventHandler,
+  useCallback,
   useEffect,
   useMemo,
   useState
 } from 'react';
 
+import debounce from 'lodash.debounce';
+
 import { getPokemonsService } from '../service/pokemon';
 
-import styles from '../styles/Home.module.css';
 import { paginate } from '../utils/array';
 
 interface ModifyPokemonType {
@@ -30,19 +32,17 @@ const Home: NextPage<Props> = ({ pokemons }) => {
   const [searchName, setSearchName] = useState('');
   const [pokemonSeeingList, setPokemonSeeingList] =
     useState<ModifyPokemonType[]>([]);
-
-  const pokemonsFiltered = useMemo(
-    () =>
-      pokemons.filter(({ modifyName }) =>
-        modifyName.includes(searchName)
-      ),
-    [pokemons, searchName]
-  );
+  const [pokemonsFiltered, setPokemonsFiltered] = useState<
+    ModifyPokemonType[]
+  >([]);
 
   useEffect(() => {
-    setPage(1);
-    setPokemonSeeingList([]);
-  }, [searchName]);
+    setPokemonsFiltered(
+      pokemons.filter(({ modifyName }) =>
+        modifyName.includes(searchName)
+      )
+    );
+  }, [pokemons, searchName]);
 
   useEffect(() => {
     const newList = paginate(
@@ -57,18 +57,24 @@ const Home: NextPage<Props> = ({ pokemons }) => {
     setPage((page) => page + 1);
   };
 
-  const onChange: ChangeEventHandler<HTMLInputElement> = (
-    e
-  ) => {
-    setSearchName(e.target.value);
-  };
+  const onChange: ChangeEventHandler<HTMLInputElement> =
+    useCallback((e) => {
+      setSearchName(e?.target?.value ?? '');
+      setPage(1);
+      setPokemonSeeingList([]);
+    }, []);
+
+  const onChangeDebounce = useMemo(
+    () => debounce(onChange, 200),
+    [onChange]
+  );
 
   return (
-    <div className={styles.container}>
+    <div>
       <input
         placeholder="Digite um nome a pesquisar"
-        onChange={onChange}
-        value={searchName}
+        onChange={onChangeDebounce}
+        type="text"
       />
       <ul>
         {pokemonSeeingList.map(
