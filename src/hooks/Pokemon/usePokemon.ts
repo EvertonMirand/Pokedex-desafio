@@ -1,6 +1,6 @@
 import { Pokemon } from './../../models/Pokemon';
 import { PokemonContext } from './../../context/PokemonContext';
-import { useCallback, useContext, useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 
 const getSpriteName = (
   isFemale: boolean,
@@ -29,8 +29,14 @@ export const usePokemon = (pokemon: Pokemon) => {
     };
 
     const spriteName = getSpriteName(isFemale, isShiny);
+
+    console.log(sprites[spriteName]);
     return (
-      sprites[spriteName] ?? sprites.front_default ?? ''
+      sprites[spriteName] ??
+      (isShiny
+        ? sprites.front_shiny
+        : sprites.front_default) ??
+      ''
     );
   }, [isFemale, isShiny, pokemon]);
 
@@ -45,7 +51,11 @@ export const usePokemon = (pokemon: Pokemon) => {
       'back'
     );
     return (
-      sprites[spriteName] ?? sprites.front_default ?? ''
+      sprites[spriteName] ??
+      (isShiny
+        ? sprites.back_shiny
+        : sprites.back_default) ??
+      ''
     );
   }, [isFemale, isShiny, pokemon]);
 

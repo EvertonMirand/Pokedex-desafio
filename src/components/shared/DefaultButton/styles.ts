@@ -14,5 +14,6 @@ export const Button = styled.button<ButtonProps>`
     borderRadius}px;
 
   padding: 5px;
-  cursor: pointer;
+  cursor: ${({ disabled }) =>
+    disabled ? 'not-allowed' : 'pointer'};
 `;

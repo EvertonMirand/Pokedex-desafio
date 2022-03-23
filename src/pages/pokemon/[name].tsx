@@ -17,7 +17,6 @@ interface Props {
 
 const Pokemon: NextPage<Props> = ({ pokemon, error }) => {
   const {
-    sprites: { front_default, back_default } = {},
     name,
     base_experience,
     height,
