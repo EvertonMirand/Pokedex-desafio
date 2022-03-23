@@ -105,6 +105,7 @@ const Home: NextPage<Props> = ({ pokemons }) => {
 export const getServerSideProps: GetServerSideProps =
   async () => {
     const { results = [] } = await getPokemonsService();
+
     return {
       props: {
         pokemons: results.map<ModifyPokemonType>(
