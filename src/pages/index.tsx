@@ -22,6 +22,7 @@ import PokemonItem from '../components/Home/PokemonItem';
 import LoadMoreButton from '../components/Home/LoadMoreButton';
 import { DefaultInput } from '../components/shared/DefaultInput/styles';
 import Head from 'next/head';
+import HasErroContainer from '../components/shared/HasErroContainer';
 
 interface ModifyPokemonType {
   name: string;
@@ -81,19 +82,8 @@ const Home: NextPage<Props> = ({ pokemons, error }) => {
     [onChange]
   );
 
-  if (error) {
-    return (
-      <div>
-        <Head>
-          <title>{error}</title>
-        </Head>
-        <span>{error}</span>
-      </div>
-    );
-  }
-
   return (
-    <Fragment>
+    <HasErroContainer error={error}>
       <Head>
         <title>Search Pokemon</title>
       </Head>
@@ -118,7 +108,7 @@ const Home: NextPage<Props> = ({ pokemons, error }) => {
           />
         </HomeContent>
       </HomeContainer>
-    </Fragment>
+    </HasErroContainer>
   );
 };
 
