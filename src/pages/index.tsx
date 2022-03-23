@@ -19,6 +19,7 @@ import {
 } from '../styles/HomeStyles';
 import PokemonItem from '../components/Home/PokemonItem';
 import LoadMoreButton from '../components/Home/LoadMoreButton';
+import { DefaultInput } from '../components/shared/DefaultInput/styles';
 
 interface ModifyPokemonType {
   name: string;
@@ -79,7 +80,7 @@ const Home: NextPage<Props> = ({ pokemons }) => {
   return (
     <HomeContainer>
       <HomeContent>
-        <input
+        <DefaultInput
           placeholder="Digite um nome a pesquisar"
           onChange={onChangeDebounce}
           type="text"
