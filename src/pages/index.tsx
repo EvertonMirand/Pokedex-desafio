@@ -12,6 +12,13 @@ import debounce from 'lodash.debounce';
 import { getPokemonsService } from '../service/pokemon';
 
 import { paginate } from '../utils/array';
+import {
+  HomeContainer,
+  HomeContent,
+  PokemonListContainer
+} from '../styles/HomeStyles';
+import PokemonItem from '../components/Home/PokemonItem';
+import LoadMoreButton from '../components/Home/LoadMoreButton';
 
 interface ModifyPokemonType {
   name: string;
@@ -70,28 +77,27 @@ const Home: NextPage<Props> = ({ pokemons }) => {
   );
 
   return (
-    <div>
-      <input
-        placeholder="Digite um nome a pesquisar"
-        onChange={onChangeDebounce}
-        type="text"
-      />
-      <ul>
-        {pokemonSeeingList.map(
-          ({ name, modifyName, id }) => (
-            <li key={name}>
-              {id} - {modifyName}
-            </li>
-          )
-        )}
-      </ul>
-      {pokemonsFiltered.length >
-        pokemonSeeingList.length && (
-        <button onClick={onClickLoadMore}>
-          Carregar mais
-        </button>
-      )}
-    </div>
+    <HomeContainer>
+      <HomeContent>
+        <input
+          placeholder="Digite um nome a pesquisar"
+          onChange={onChangeDebounce}
+          type="text"
+        />
+        <PokemonListContainer>
+          {pokemonSeeingList.map((pokemon) => (
+            <PokemonItem {...pokemon} key={pokemon.id} />
+          ))}
+        </PokemonListContainer>
+        <LoadMoreButton
+          showButton={
+            pokemonsFiltered.length >
+            pokemonSeeingList.length
+          }
+          onClick={onClickLoadMore}
+        />
+      </HomeContent>
+    </HomeContainer>
   );
 };
 
