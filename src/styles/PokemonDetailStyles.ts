@@ -19,3 +19,11 @@ export const PokemonDetailContent = styled.div`
   width: 100%;
   max-width: 1600px;
 `;
+
+export const PokemonInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;

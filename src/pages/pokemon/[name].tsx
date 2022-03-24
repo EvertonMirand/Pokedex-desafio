@@ -4,12 +4,16 @@ import Head from 'next/head';
 
 import PokemonSprites from '../../components/PokemonDetails/PokemonSprites';
 import { Container } from '../../components/PokemonDetails/PokemonSprites/styles';
+import PokemonTypes from '../../components/PokemonDetails/PokemonTypes';
 
 import HasErroContainer from '../../components/shared/HasErroContainer';
 
 import { Pokemon } from '../../models/Pokemon';
 import { getPokemonService } from '../../service/pokemon';
-import { PokemonDetailContent } from '../../styles/PokemonDetailStyles';
+import {
+  PokemonDetailContent,
+  PokemonInfoContainer
+} from '../../styles/PokemonDetailStyles';
 
 interface Props {
   pokemon: Pokemon;
@@ -38,18 +42,8 @@ const Pokemon: NextPage<Props> = ({ pokemon, error }) => {
           <h1>{name}</h1>
           <PokemonSprites pokemon={pokemon} />
           <div>
+            <PokemonTypes types={types} />
             <div>
-              <p>Base experience: {base_experience}</p>
-              <p>Height: {height}</p>
-              <p>Weight: {weight}</p>
-              <p>Types: </p>
-              <div>
-                {types.map(({ type: { name } }) => (
-                  <div key={name}>
-                    <p>{name}</p>
-                  </div>
-                ))}
-              </div>
               <p>Abilities:</p>
               <div>
                 {abilities.map(
@@ -77,6 +71,11 @@ const Pokemon: NextPage<Props> = ({ pokemon, error }) => {
                   )
                 )}
               </div>
+              <PokemonInfoContainer>
+                <p>Base experience: {base_experience}</p>
+                <p>Height: {height}</p>
+                <p>Weight: {weight}</p>
+              </PokemonInfoContainer>
             </div>
           </div>
         </PokemonDetailContent>

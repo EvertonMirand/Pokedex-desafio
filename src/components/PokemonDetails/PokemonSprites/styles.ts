@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { desktopQuery } from '../../../styles/utils';
 import { Button } from '../../shared/DefaultButton/styles';
 
 export const Container = styled.div`
@@ -10,15 +11,19 @@ export const Container = styled.div`
 
 export const ImagesContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-gap: 10px;
-  width: 100%;
+  width: 90%;
   max-width: 600px;
   padding: 10px;
   border-radius: 10px;
   padding: 30px;
   background: blue;
   margin-top: 10px;
+
+  ${desktopQuery()} {
+    grid-template-columns: 1fr 1fr;
+  }
 `;
 
 export const ChoseSpriteButton = styled(Button)`

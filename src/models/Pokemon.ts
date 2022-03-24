@@ -3,7 +3,7 @@ export interface PokemonListType {
   url: string;
 }
 
-interface Ability {
+export interface Ability {
   ability: {
     name: string;
     url: String;
@@ -12,7 +12,7 @@ interface Ability {
   slot: number;
 }
 
-interface GameIndice {
+export interface GameIndice {
   game_index: number;
   version: {
     name: string;
@@ -20,7 +20,7 @@ interface GameIndice {
   };
 }
 
-interface Types {
+export interface Types {
   slot: number;
   type: {
     name: string;
@@ -28,7 +28,7 @@ interface Types {
   };
 }
 
-interface VersionGroupDetail {
+export interface VersionGroupDetail {
   level_learned_at: number;
   move_learn_method: {
     name: string;
@@ -40,7 +40,7 @@ interface VersionGroupDetail {
   };
 }
 
-interface Move {
+export interface Move {
   move: {
     name: string;
     url: string;
@@ -48,7 +48,7 @@ interface Move {
   version_group_details: VersionGroupDetail[];
 }
 
-interface Stats {
+export interface Stats {
   base_stat: number;
   effort: number;
   stat: {
@@ -57,12 +57,12 @@ interface Stats {
   };
 }
 
-interface Form {
+export interface Form {
   name: string;
   url: string;
 }
 
-interface Sprites {
+export interface Sprites {
   back_default: string;
   back_female?: string | null;
   back_shiny: string;
@@ -76,7 +76,7 @@ interface Sprites {
   };
 }
 
-interface HeldItems {
+export interface HeldItems {
   item: {
     name: string;
     url: string;
