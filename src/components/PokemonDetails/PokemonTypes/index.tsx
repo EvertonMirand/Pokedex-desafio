@@ -10,7 +10,7 @@ interface Props {
 const PokemonTypes: React.FC<Props> = ({ types }) => {
   return (
     <Container>
-      <strong>Types: </strong>
+      <h4>Types: </h4>
       <TypesContainer>
         {types.map(({ type: { name } }) => (
           <div key={name}>

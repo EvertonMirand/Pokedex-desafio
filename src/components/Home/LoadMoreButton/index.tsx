@@ -13,7 +13,8 @@ const LoadMoreButton: React.FC<Props> = ({
   return showButton ? (
     <Button
       onClick={onClick}
-      background="#0a0"
+      background="#fff"
+      color="#000"
       borderRadius={5}
       data-testid="load-more-btn"
     >

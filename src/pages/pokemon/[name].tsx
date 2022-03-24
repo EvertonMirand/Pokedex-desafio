@@ -1,9 +1,11 @@
 import { GetServerSideProps, NextPage } from 'next';
 
 import Head from 'next/head';
+import PokemonAbilities from '../../components/PokemonDetails/PokemonAbilities';
 
 import PokemonSprites from '../../components/PokemonDetails/PokemonSprites';
 import { Container } from '../../components/PokemonDetails/PokemonSprites/styles';
+import PokemonStats from '../../components/PokemonDetails/PokemonStats';
 import PokemonTypes from '../../components/PokemonDetails/PokemonTypes';
 
 import HasErroContainer from '../../components/shared/HasErroContainer';
@@ -44,37 +46,19 @@ const Pokemon: NextPage<Props> = ({ pokemon, error }) => {
           <div>
             <PokemonTypes types={types} />
             <div>
-              <p>Abilities:</p>
-              <div>
-                {abilities.map(
-                  ({ ability: { name }, is_hidden }) => (
-                    <p key={name}>
-                      {name}
-                      {is_hidden ? ' hidden ability' : ''}
-                    </p>
-                  )
-                )}
-              </div>
-              <div>
-                <p>Stats:</p>
-                {stats.map(
-                  ({
-                    base_stat,
-                    effort,
-                    stat: { name }
-                  }) => (
-                    <div key={name}>
-                      <p>{name}</p>
-                      <p>{base_stat}</p>
-                      <p>{effort}</p>
-                    </div>
-                  )
-                )}
-              </div>
+              <PokemonAbilities abilities={abilities} />
+              <PokemonStats stats={stats} />
               <PokemonInfoContainer>
-                <p>Base experience: {base_experience}</p>
-                <p>Height: {height}</p>
-                <p>Weight: {weight}</p>
+                <p>
+                  <strong>Base experience</strong>:{' '}
+                  {base_experience}
+                </p>
+                <p>
+                  <strong>Height:</strong> {height}
+                </p>
+                <p>
+                  <strong>Weight:</strong> {weight}
+                </p>
               </PokemonInfoContainer>
             </div>
           </div>
