@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const HomeContainer = styled.div`
+export const Container = styled.div`
   padding-top: 100px;
   padding-bottom: 60px;
   display: flex;
@@ -11,21 +11,11 @@ export const HomeContainer = styled.div`
   width: 100%;
 `;
 
-export const HomeContent = styled.div`
+export const PokemonDetailContent = styled.div`
   display: flex;
   flex-direction: column;
 
   align-items: center;
   width: 100%;
   max-width: 1600px;
-`;
-
-export const PokemonListContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 15px;
-  margin-top: 30px;
-  margin-bottom: 20px;
-  max-width: 500px;
-  width: 80%;
 `;

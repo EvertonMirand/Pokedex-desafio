@@ -30,7 +30,6 @@ export const usePokemon = (pokemon: Pokemon) => {
 
     const spriteName = getSpriteName(isFemale, isShiny);
 
-    console.log(sprites[spriteName]);
     return (
       sprites[spriteName] ??
       (isShiny

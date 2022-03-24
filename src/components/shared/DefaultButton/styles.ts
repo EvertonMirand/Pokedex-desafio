@@ -13,7 +13,7 @@ export const Button = styled.button<ButtonProps>`
   border-radius: ${({ borderRadius = 0 }) =>
     borderRadius}px;
 
-  padding: 5px;
+  padding: 10px;
   cursor: ${({ disabled }) =>
     disabled ? 'not-allowed' : 'pointer'};
 `;
