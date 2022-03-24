@@ -15,8 +15,9 @@ const LoadMoreButton: React.FC<Props> = ({
       onClick={onClick}
       background="#0a0"
       borderRadius={5}
+      data-testid="load-more-btn"
     >
-      Carregar mais
+      Load more
     </Button>
   ) : null;
 };

@@ -93,6 +93,7 @@ const Home: NextPage<Props> = ({ pokemons, error }) => {
             placeholder="Type a name to search"
             onChange={onChangeDebounce}
             type="text"
+            data-testid="search-name-input"
           />
           <PokemonListContainer>
             {pokemonSeeingList.map((pokemon) => (

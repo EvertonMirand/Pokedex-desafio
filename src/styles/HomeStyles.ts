@@ -19,10 +19,10 @@ export const HomeContent = styled.div`
   max-width: 1600px;
 `;
 
-export const PokemonListContainer = styled.ul`
+export const PokemonListContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  grid-gap: 5px;
+  grid-gap: 15px;
   margin-top: 30px;
   margin-bottom: 20px;
   max-width: 500px;

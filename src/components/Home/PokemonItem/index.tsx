@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Container } from './styles';
+import { useRouter } from 'next/router';
+import { Container, PokemonNameText } from './styles';
 
 interface Props {
   name: string;
@@ -9,19 +10,29 @@ interface Props {
   image?: string;
 }
 
-const imageSize = 60;
+const imageSize = 100;
 
 const PokemonItem: React.FC<Props> = ({
   name,
-  id,
+
   modifyName,
   image = ''
 }) => {
+  const { push } = useRouter();
+
+  const onClick = () => {
+    push(`/pokemon/${name}`);
+  };
+
   return (
-    <Container key={name}>
-      <Link href={`/pokemon/${name}`} passHref>
-        {`${id} - ${modifyName ?? name}`}
-      </Link>
+    <Container
+      key={name}
+      onClick={onClick}
+      data-testid={`PokemonCardItem${name}`}
+    >
+      <PokemonNameText>{`${
+        modifyName ?? name
+      }`}</PokemonNameText>
       <Image
         src={image}
         alt={modifyName}
