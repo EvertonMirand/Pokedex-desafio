@@ -1,6 +1,6 @@
 import { Pokemon } from './../../models/Pokemon';
 import { PokemonContext } from './../../context/PokemonContext';
-import { useContext, useMemo } from 'react';
+import { useContext, useMemo, useCallback } from 'react';
 
 const getSpriteName = (
   isFemale: boolean,
@@ -23,40 +23,39 @@ const getSpriteName = (
 export const usePokemon = (pokemon: Pokemon) => {
   const { isFemale, isShiny } = useContext(PokemonContext);
 
-  const frontImage = useMemo(() => {
-    const sprites = (pokemon.sprites || {}) as {
-      [key: string]: string | null | undefined;
-    };
+  const getSpriteUrl = useCallback(
+    (suffix = 'front') => {
+      const sprites = (pokemon.sprites || {}) as {
+        [key: string]: string | null | undefined;
+      };
 
-    const spriteName = getSpriteName(isFemale, isShiny);
+      const spriteName = getSpriteName(
+        isFemale,
+        isShiny,
+        suffix
+      );
+      const noFemaleSprite = getSpriteName(
+        false,
+        isShiny,
+        suffix
+      );
 
-    return (
-      sprites[spriteName] ??
-      (isShiny
-        ? sprites.front_shiny
-        : sprites.front_default) ??
-      ''
-    );
-  }, [isFemale, isShiny, pokemon]);
+      return (
+        sprites[spriteName] ?? sprites[noFemaleSprite] ?? ''
+      );
+    },
+    [isFemale, isShiny, pokemon.sprites]
+  );
 
-  const backImage = useMemo(() => {
-    const sprites = (pokemon.sprites || {}) as {
-      [key: string]: string | null | undefined;
-    };
+  const frontImage = useMemo(
+    () => getSpriteUrl(),
+    [getSpriteUrl]
+  );
 
-    const spriteName = getSpriteName(
-      isFemale,
-      isShiny,
-      'back'
-    );
-    return (
-      sprites[spriteName] ??
-      (isShiny
-        ? sprites.back_shiny
-        : sprites.back_default) ??
-      ''
-    );
-  }, [isFemale, isShiny, pokemon]);
+  const backImage = useMemo(
+    () => getSpriteUrl('back'),
+    [getSpriteUrl]
+  );
 
-  return { frontImage, backImage };
+  return { frontImage, backImage, getSpriteUrl };
 };
