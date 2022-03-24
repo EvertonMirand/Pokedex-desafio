@@ -1,6 +1,9 @@
 import Image from 'next/image';
-import Link from 'next/link';
+
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { notFoundPokemonImage } from '../../../utils/image.utils';
+
 import { Container, PokemonNameText } from './styles';
 
 interface Props {
@@ -18,6 +21,7 @@ const PokemonItem: React.FC<Props> = ({
   modifyName,
   image = ''
 }) => {
+  const [errorImage, setErrorImage] = useState(false);
   const { push } = useRouter();
 
   const onClick = () => {
@@ -34,10 +38,13 @@ const PokemonItem: React.FC<Props> = ({
         modifyName ?? name
       }`}</PokemonNameText>
       <Image
-        src={image}
+        src={errorImage ? notFoundPokemonImage : image}
         alt={modifyName}
         width={imageSize}
         height={imageSize}
+        onError={() => {
+          setErrorImage(true);
+        }}
       />
     </Container>
   );

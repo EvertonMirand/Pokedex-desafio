@@ -1,7 +1,5 @@
 import React, { Fragment } from 'react';
 
-// import { Container } from './styles';
-
 interface Props {
   error?: string | null;
 }

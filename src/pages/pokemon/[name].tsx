@@ -31,7 +31,7 @@ const Pokemon: NextPage<Props> = ({ pokemon, error }) => {
     types,
     abilities,
     stats
-  } = pokemon;
+  } = pokemon || {};
 
   return (
     <HasErroContainer error={error}>
