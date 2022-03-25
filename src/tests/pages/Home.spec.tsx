@@ -2,7 +2,7 @@ import React from 'react';
 
 import { render, screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
-import { fireEvent, waitFor } from '@testing-library/dom';
+import { fireEvent } from '@testing-library/dom';
 import Home, {
   getServerSideProps,
   ModifyPokemonType
@@ -15,12 +15,6 @@ import { useRouter } from 'next/router';
 
 jest.mock('../../service/api');
 jest.mock('next/router');
-jest.mock('lodash/debounce', () =>
-  jest.fn((fn) => {
-    fn.cancel = jest.fn();
-    return fn;
-  })
-);
 
 jest.useFakeTimers();
 

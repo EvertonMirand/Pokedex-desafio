@@ -33,7 +33,9 @@ const PokemonSprites: React.FC<Props> = ({ pokemon }) => {
         {frontImage && (
           <Image
             src={frontImage}
-            alt="Pokemon front"
+            alt={`Pokemon front ${
+              isShiny ? 'shiny' : 'normal'
+            }`}
             width={300}
             height={300}
           />
@@ -41,7 +43,9 @@ const PokemonSprites: React.FC<Props> = ({ pokemon }) => {
         {backImage && (
           <Image
             src={backImage}
-            alt="Pokemon back"
+            alt={`Pokemon back ${
+              isShiny ? 'shiny' : 'normal'
+            }`}
             width={300}
             height={300}
           />

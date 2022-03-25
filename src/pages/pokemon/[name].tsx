@@ -22,7 +22,10 @@ interface Props {
   error?: string;
 }
 
-const Pokemon: NextPage<Props> = ({ pokemon, error }) => {
+const PokemonDetail: NextPage<Props> = ({
+  pokemon,
+  error
+}) => {
   const {
     name,
     base_experience,
@@ -87,4 +90,4 @@ export const getServerSideProps: GetServerSideProps =
     }
   };
 
-export default Pokemon;
+export default PokemonDetail;
