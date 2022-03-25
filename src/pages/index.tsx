@@ -24,7 +24,7 @@ import { DefaultInput } from '../components/shared/DefaultInput/styles';
 import Head from 'next/head';
 import HasErroContainer from '../components/shared/HasErroContainer';
 
-interface ModifyPokemonType {
+export interface ModifyPokemonType {
   name: string;
   modifyName: string;
   id: number;
