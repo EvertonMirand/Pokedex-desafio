@@ -97,6 +97,7 @@ describe('Create home page', () => {
   });
 
   it('filter pokemons', async () => {
+    const filter = 'char';
     const useRouterMocked = mocked(useRouter);
 
     useRouterMocked.mockReturnValue({
@@ -118,7 +119,7 @@ describe('Create home page', () => {
     const input = screen.getByTestId('search-name-input');
     await act(async () => {
       fireEvent.input(input, {
-        target: { value: 'char' }
+        target: { value: filter }
       });
       jest.runAllTimers();
     });
@@ -134,6 +135,10 @@ describe('Create home page', () => {
       }
     );
 
-    expect(pokemonsCards.length).toBe(3);
+    const filteresList = pokemonList.filter(({ name }) =>
+      name.includes(filter)
+    );
+
+    expect(pokemonsCards.length).toBe(filteresList.length);
   });
 });
