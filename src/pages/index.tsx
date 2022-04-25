@@ -1,18 +1,8 @@
 import type { GetServerSideProps, NextPage } from 'next';
-import {
-  ChangeEventHandler,
-  Fragment,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState
-} from 'react';
-
-import debounce from 'lodash.debounce';
 
 import { getPokemonsService } from '../service/pokemon';
 
-import { paginate } from '../utils/array';
+import { useHome } from '../hooks/Home/useHome';
 import {
   HomeContainer,
   HomeContent,
@@ -37,50 +27,13 @@ interface Props {
   error?: string;
 }
 
-const pageSize = 10;
-
 const Home: NextPage<Props> = ({ pokemons, error }) => {
-  const [currentPage, setPage] = useState(1);
-
-  const [searchName, setSearchName] = useState('');
-  const [pokemonSeeingList, setPokemonSeeingList] =
-    useState<ModifyPokemonType[]>([]);
-  const [pokemonsFiltered, setPokemonsFiltered] = useState<
-    ModifyPokemonType[]
-  >([]);
-
-  useEffect(() => {
-    setPokemonsFiltered(
-      pokemons.filter(({ modifyName }) =>
-        modifyName.includes(searchName)
-      )
-    );
-  }, [pokemons, searchName]);
-
-  useEffect(() => {
-    const newList = paginate(
-      pokemonsFiltered,
-      currentPage,
-      pageSize
-    );
-    setPokemonSeeingList((list) => [...list, ...newList]);
-  }, [currentPage, pokemonsFiltered]);
-
-  const onClickLoadMore = () => {
-    setPage((page) => page + 1);
-  };
-
-  const onChange: ChangeEventHandler<HTMLInputElement> =
-    useCallback((e) => {
-      setSearchName(e?.target?.value ?? '');
-      setPage(1);
-      setPokemonSeeingList([]);
-    }, []);
-
-  const onChangeDebounce = useMemo(
-    () => debounce(onChange, 200),
-    [onChange]
-  );
+  const {
+    onChangeDebounce,
+    pokemonSeeingList,
+    pokemonsFiltered,
+    onClickLoadMore
+  } = useHome(pokemons);
 
   return (
     <HasErroContainer error={error}>
