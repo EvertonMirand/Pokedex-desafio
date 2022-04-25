@@ -16,6 +16,48 @@ interface Props {
   pokemon: Pokemon;
 }
 
+interface PokemonImageProps {
+  frontImage: string;
+  backImage: string;
+  isShiny: boolean;
+}
+
+const getPokemonColorTypeName = (
+  isShiny: boolean = false
+): 'shiny' | 'normal' => {
+  return isShiny ? 'shiny' : 'normal';
+};
+
+const PokemonImage: React.FC<PokemonImageProps> = ({
+  backImage,
+  frontImage,
+  isShiny
+}) => {
+  const pokemonColorTypeName =
+    getPokemonColorTypeName(isShiny);
+
+  return (
+    <ImagesContainer>
+      {frontImage && (
+        <Image
+          src={frontImage}
+          alt={`Pokemon front ${pokemonColorTypeName}`}
+          width={300}
+          height={300}
+        />
+      )}
+      {backImage && (
+        <Image
+          src={backImage}
+          alt={`Pokemon back ${pokemonColorTypeName}`}
+          width={300}
+          height={300}
+        />
+      )}
+    </ImagesContainer>
+  );
+};
+
 const PokemonSprites: React.FC<Props> = ({ pokemon }) => {
   const {
     changeToFemale,
@@ -29,28 +71,11 @@ const PokemonSprites: React.FC<Props> = ({ pokemon }) => {
   const { backImage, frontImage } = usePokemon(pokemon);
   return (
     <Container>
-      <ImagesContainer>
-        {frontImage && (
-          <Image
-            src={frontImage}
-            alt={`Pokemon front ${
-              isShiny ? 'shiny' : 'normal'
-            }`}
-            width={300}
-            height={300}
-          />
-        )}
-        {backImage && (
-          <Image
-            src={backImage}
-            alt={`Pokemon back ${
-              isShiny ? 'shiny' : 'normal'
-            }`}
-            width={300}
-            height={300}
-          />
-        )}
-      </ImagesContainer>
+      <PokemonImage
+        backImage={backImage}
+        frontImage={frontImage}
+        isShiny={isShiny}
+      />
       <ButtonSpriteContainer>
         <OptionSpriteContainer>
           <ChoseSpriteButton
